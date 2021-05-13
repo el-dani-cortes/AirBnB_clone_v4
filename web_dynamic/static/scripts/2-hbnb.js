@@ -12,6 +12,15 @@ $('document').ready(function () {
   });
   /* Get status of api and change class if api not available
   Request status every 10 seconds */
+  /* Simple way, manual re-loading page: */
+  /* $.get(`http://${window.location.hostname}:5001/api/v1/status/`, function(status){
+    if (status.status === 'OK') {
+      $('DIV#api_status').addClass('available');
+    } else {
+       $('DIV#api_status').removeClass('available');
+    }
+  }); 
+  */
   const callout = function () {
     $.ajax({
       type: 'get',
