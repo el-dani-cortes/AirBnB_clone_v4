@@ -22,7 +22,7 @@ button:hover {
     opacity: 0.9;
 }
 .filters div {
-    display: inline-grid;
+    display: inline-block;
 }
 .filters h2 {
     margin-left: 15%;
@@ -40,6 +40,10 @@ button:hover {
     margin-top: 0;
     font-weight: 400;
     font-size: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
 }
 .locations {
     height: 100%;
