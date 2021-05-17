@@ -63,13 +63,13 @@ $('document').ready(function () {
             '</div>' +
             '<div class="information">' +
             '<div class="max_guest">' +
-            '<br />' + place.max_guest + 'Guests' +
+            '<br />' + place.max_guest + ' Guests' +
             '</div>' +
             '<div class="number_rooms">' +
-            '<br />' + place.number_rooms + 'Bedrooms' +
+            '<br />' + place.number_rooms + ' Bedrooms' +
             '</div>' +
             '<div class="number_bathrooms">' +
-            '<br />' + place.number_bathrooms + 'Bathroom' +
+            '<br />' + place.number_bathrooms + ' Bathroom' +
             '</div>' +
             '</div>' +
             '<div class="description">' + place.description +
@@ -102,13 +102,13 @@ $('document').ready(function () {
             '</div>' +
             '<div class="information">' +
             '<div class="max_guest">' +
-            '<br />' + place.max_guest + 'Guests' +
+            '<br />' + place.max_guest + ' Guests' +
             '</div>' +
             '<div class="number_rooms">' +
-            '<br />' + place.number_rooms + 'Bedrooms' +
+            '<br />' + place.number_rooms + ' Bedrooms' +
             '</div>' +
             '<div class="number_bathrooms">' +
-            '<br />' + place.number_bathrooms + 'Bathroom' +
+            '<br />' + place.number_bathrooms + ' Bathroom' +
             '</div>' +
             '</div>' +
             '<div class="description">' + place.description +
