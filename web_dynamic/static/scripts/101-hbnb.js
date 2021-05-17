@@ -70,7 +70,7 @@ $('document').ready(function () {
   };
   callout();
 
-  /*Retrieve all places and create a articule tag with them*/
+  /* Retrieve all places and create a articule tag with them */
   const getPlaces = function (data) {
     $.ajax({
       type: 'POST',
@@ -80,80 +80,79 @@ $('document').ready(function () {
       dataType: 'json',
       success: function (places) {
         $.each(places, function (index, place) {
-	  $('.places').append(
-	    '<article>' +
-	      '<div class="title_box">' +
-	      '<h2>' + place.name + '</h2>' +
-	      '<div class="price_by_night">' + '$' + place.price_by_night +
-	      '</div>' +
-	      '</div>' +
-	      '<div class="information">' +
-	      '<div class="max_guest">' +
-	      '<br />' + place.max_guest + ' Guests' +
-	      '</div>' +
-	      '<div class="number_rooms">' +
-	      '<br />' + place.number_rooms + ' Bedrooms' +
-	      '</div>' +
-	      '<div class="number_bathrooms">' +
-	      '<br />' + place.number_bathrooms + ' Bathroom' +
-	      '</div>' +
-	      '</div>' +
-	      '<div class="description">' + place.description +
-	      '</div>' +
-	      '<div class="reviews" id="' + place.id + '">' +
-	      '<h2><b>Reviews</b></h2>' +
-	      '<span class="display" id="' + place.id + '"> Show</span>' +
-	      '</div>' +
-	      '</article>'
-	  );
-	});
-      },
+          $('.places').append(
+            '<article>' +
+            '<div class="title_box">' +
+            '<h2>' + place.name + '</h2>' +
+            '<div class="price_by_night">' + '$' + place.price_by_night +
+            '</div>' +
+            '</div>' +
+            '<div class="information">' +
+            '<div class="max_guest">' +
+            '<br />' + place.max_guest + ' Guests' +
+            '</div>' +
+            '<div class="number_rooms">' +
+            '<br />' + place.number_rooms + ' Bedrooms' +
+            '</div>' +
+            '<div class="number_bathrooms">' +
+            '<br />' + place.number_bathrooms + ' Bathroom' +
+            '</div>' +
+            '</div>' +
+            '<div class="description">' + place.description +
+            '</div>' +
+            '<div class="reviews" id="' + place.id + '">' +
+            '<h2><b>Reviews</b></h2>' +
+            '<span class="display" id="' + place.id + '"> Show</span>' +
+            '</div>' +
+            '</article>'
+          );
+        });
+      }
     });
-  }
+  };
   getPlaces();
 
   /*
     Get reviews list from a place when display class is clicked
   */
-  let user;
-  $('.places').on("click", '.display', function() {
-    reviewId = 'div#' + $(this).attr("id");
-    if ($(this).text() == ' Show') {
+  $('.places').on('click', '.display', function () {
+    const reviewId = 'div#' + $(this).attr('id');
+    if ($(this).text() === ' Show') {
       $(this).text(' Hide');
       $.ajax({
-	type: 'GET',
-	url: 'http://localhost:5001/api/v1/places/' + $(this).attr("id") + '/reviews',
-	success: function (reviews) {
-	  reviewsNumbers = Object.keys(reviews).length;
-	  $(reviewId  + ' h2').prepend(reviewsNumbers + ' ')
-	  $.each(reviews, function (index, review) {
-	    let date = review.created_at.split('T')[0];
-	    $.ajax({
-	      type: 'GET',
-	      url: 'http://localhost:5001/api/v1/users/' + review.user_id,
-	      success: function (user) {
-		$(reviewId).append(
-		  '<ul>' +
-		    '<li>' +
-		    '<h3>' + 'From ' + user.first_name + ' ' + user.last_name +
-		    ' ' + date + '</h3>' +
-		    '<p>' + review.text + '</p>' +
-		    '</li>' +
-		    '</ul>'
-		);
-	      }
-	    });
-	  });
-	},
+        type: 'GET',
+        url: 'http://localhost:5001/api/v1/places/' + $(this).attr('id') + '/reviews',
+        success: function (reviews) {
+          const reviewsNumbers = Object.keys(reviews).length;
+          $(reviewId + ' h2').prepend(reviewsNumbers + ' ');
+          $.each(reviews, function (index, review) {
+            const date = review.created_at.split('T')[0];
+            $.ajax({
+              type: 'GET',
+              url: 'http://localhost:5001/api/v1/users/' + review.user_id,
+              success: function (user) {
+                $(reviewId).append(
+                  '<ul>' +
+                  '<li>' +
+                  '<h3>' + 'From ' + user.first_name + ' ' + user.last_name +
+                  ' ' + date + '</h3>' +
+                  '<p>' + review.text + '</p>' +
+                  '</li>' +
+                  '</ul>'
+                );
+              }
+            });
+          });
+        }
       });
     } else {
       $('.reviews h2').text('Reviews');
       $('span').text(' Show');
-      $(reviewId  + ' ul').css("display", "none");
+      $(reviewId + ' ul').css('display', 'none');
     }
   });
 
-  /*Filter places by amenities on button search click*/
+  /* Filter places by amenities on button search click */
   $('button').click(function () {
     $.ajax({
       type: 'POST',
@@ -170,32 +169,32 @@ $('document').ready(function () {
         $.each(places, function (index, place) {
           $('.places').append(
             '<article>' +
-	      '<div class="title_box">' +
-	      '<h2>' + place.name + '</h2>' +
-	      '<div class="price_by_night">' + '$' + place.price_by_night +
-	      '</div>' +
-	      '</div>' +
-	      '<div class="information">' +
-	      '<div class="max_guest">' +
-	      '<br />' + place.max_guest + ' Guests' +
-	      '</div>' +
-	      '<div class="number_rooms">' +
-	      '<br />' + place.number_rooms + ' Bedrooms' +
-	      '</div>' +
-	      '<div class="number_bathrooms">' +
-	      '<br />' + place.number_bathrooms + ' Bathroom' +
-	      '</div>' +
-	      '</div>' +
-	      '<div class="description">' + place.description +
-	      '</div>' +
-	      '<div class="reviews" id="' + place.id + '">' +
-	      '<h2><b>Reviews</b></h2>' +
-	      '<span class="display" id="' + place.id + '"> Show</span>' +
-	      '</div>' +
-	      '</article>'
-	  );
+            '<div class="title_box">' +
+            '<h2>' + place.name + '</h2>' +
+            '<div class="price_by_night">' + '$' + place.price_by_night +
+            '</div>' +
+            '</div>' +
+            '<div class="information">' +
+            '<div class="max_guest">' +
+            '<br />' + place.max_guest + ' Guests' +
+            '</div>' +
+            '<div class="number_rooms">' +
+            '<br />' + place.number_rooms + ' Bedrooms' +
+            '</div>' +
+            '<div class="number_bathrooms">' +
+            '<br />' + place.number_bathrooms + ' Bathroom' +
+            '</div>' +
+            '</div>' +
+            '<div class="description">' + place.description +
+            '</div>' +
+            '<div class="reviews" id="' + place.id + '">' +
+            '<h2><b>Reviews</b></h2>' +
+            '<span class="display" id="' + place.id + '"> Show</span>' +
+            '</div>' +
+            '</article>'
+          );
         });
-      },
+      }
     });
   });
 });
