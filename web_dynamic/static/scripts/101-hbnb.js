@@ -69,10 +69,9 @@ $('document').ready(function () {
     });
   };
   callout();
-  /*
-    Retrieve all places and create a articule tag with them
-  */
-  const getPlaces = function () {
+
+  /* Retrieve all places and create a articule tag with them */
+  const getPlaces = function (data) {
     $.ajax({
       type: 'POST',
       contentType: 'application/json',
@@ -101,15 +100,59 @@ $('document').ready(function () {
             '</div>' +
             '<div class="description">' + place.description +
             '</div>' +
-            '</article>');
+            '<div class="reviews" id="' + place.id + '">' +
+            '<h2><b>Reviews</b></h2>' +
+            '<span class="display" id="' + place.id + '"> Show</span>' +
+            '</div>' +
+            '</article>'
+          );
         });
       }
     });
   };
   getPlaces();
+
   /*
-    Filter places by amenities on button search click
+    Get reviews list from a place when display class is clicked
   */
+  $('.places').on('click', '.display', function () {
+    const reviewId = 'div#' + $(this).attr('id');
+    if ($(this).text() === ' Show') {
+      $(this).text(' Hide');
+      $.ajax({
+        type: 'GET',
+        url: 'http://localhost:5001/api/v1/places/' + $(this).attr('id') + '/reviews',
+        success: function (reviews) {
+          const reviewsNumbers = Object.keys(reviews).length;
+          $(reviewId + ' h2').prepend(reviewsNumbers + ' ');
+          $.each(reviews, function (index, review) {
+            const date = review.created_at.split('T')[0];
+            $.ajax({
+              type: 'GET',
+              url: 'http://localhost:5001/api/v1/users/' + review.user_id,
+              success: function (user) {
+                $(reviewId).append(
+                  '<ul>' +
+                  '<li>' +
+                  '<h3>' + 'From ' + user.first_name + ' ' + user.last_name +
+                  ' ' + date + '</h3>' +
+                  '<p>' + review.text + '</p>' +
+                  '</li>' +
+                  '</ul>'
+                );
+              }
+            });
+          });
+        }
+      });
+    } else {
+      $('.reviews h2').text('Reviews');
+      $('span').text(' Show');
+      $(reviewId + ' ul').css('display', 'none');
+    }
+  });
+
+  /* Filter places by amenities on button search click */
   $('button').click(function () {
     $.ajax({
       type: 'POST',
@@ -144,7 +187,12 @@ $('document').ready(function () {
             '</div>' +
             '<div class="description">' + place.description +
             '</div>' +
-            '</article>');
+            '<div class="reviews" id="' + place.id + '">' +
+            '<h2><b>Reviews</b></h2>' +
+            '<span class="display" id="' + place.id + '"> Show</span>' +
+            '</div>' +
+            '</article>'
+          );
         });
       }
     });
